@@ -1,0 +1,24 @@
+# Use official PHP with Apache image
+FROM php:7.4-apache
+
+# Install dependencies for image manipulation (gd library) and MySQL client libraries (mysqli)
+RUN apt-get update && \
+    apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd mysqli && \
+    apt-get clean
+
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy PHP files into the container
+COPY ./src /var/www/html/
+
+# Expose the port the app runs on
+EXPOSE 80
+
+# Start Apache in the foreground
+CMD ["apache2-foreground"]

@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-service
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cloud_tp
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin1234
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    name: cloud-tp-network
+    external: true

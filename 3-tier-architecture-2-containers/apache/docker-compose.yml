@@ -1,0 +1,21 @@
+services:
+  php-apache:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    volumes:
+      - ./php:/var/www/html
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=mysql-service
+      - DB_USER=admin
+      - DB_PASSWORD=admin1234
+      - DB_NAME=cloud_tp
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    name: cloud-tp-network
+    external: true
